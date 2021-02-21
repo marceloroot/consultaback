@@ -1,7 +1,7 @@
 module.exports ={
     dialect: 'mysql',
     host:'187.87.80.23',
-    username:'marcelo',
+    username:'pmauser',
     password:'@AA88xk62',
     database:'cunsulta',
     define:{
