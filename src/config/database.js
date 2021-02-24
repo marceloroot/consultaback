@@ -1,9 +1,10 @@
+require('dotenv').config();
 module.exports ={
     dialect: 'mysql',
-    host:'187.87.80.23',
-    username:'pmauser',
-    password:'@AA88xk62',
-    database:'cunsulta',
+    host:process.env.DB_HOST,
+    username:process.env.DB_USER,
+    password:process.env.DB_PASS,
+    database:process.env.DB_NAME,
     define:{
         timestamps:true,
         underscored:true,

@@ -17,6 +17,14 @@ module.exports = {
             onUpdate:'CASCADE',
             onDelete:'CASCADE',
           },
+          nome:{
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
+          cpf:{
+            type: Sequelize.STRING,
+            allowNull: false,
+          },
           comentario:{
             type: Sequelize.STRING,
             allowNull: false,

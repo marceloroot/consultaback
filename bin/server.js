@@ -4,7 +4,7 @@ const app =  require('../src/app');
 const debug = require('debug')('nodestr:server');
 const http = require('http');
 
-const port = normalizePort(process.env.Port || '8000');
+const port = normalizePort(process.env.Port || process.env.PORT);
 app.set('port',port);
 
 

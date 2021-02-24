@@ -2,13 +2,31 @@
 const ValidationContract = require('../validator/fluent-validators');
 const Bidding = require('../models/Bidding');
 const authService = require('../services/auth-services');
+const { sequelize } = require('../models/Bidding');
 module.exports ={
    async index(req,res,next){
        
-        const biddings = await Bidding.findAll();
+        const biddings = await Bidding.findAll({
+            order: [
+                ['id', 'DESC']
+            ],
+        
+        });
         return res.status(200).json(biddings);
     },
 
+    async indexhome(req,res,next){
+       
+        const biddings = await Bidding.findAll({
+            where: {status: 1},
+            order: [
+                ['id', 'DESC']
+            ],
+             limit: 6,
+  
+        });
+        return res.status(200).json(biddings);
+    },
 
     async store(req,res,next){
 
@@ -119,6 +137,17 @@ module.exports ={
         return res.status(200).json(biddings);
     },
 
-}
+    async showhome(req,res,next){
+        const { id } = req.params;
+
+        const biddings = await Bidding.findOne({
+            where:sequelize.and({status:1},{id:id}),
+            include:'documents'
+        });
+        return res.status(200).json(biddings);
+    },
+
+} 
+
 
 
