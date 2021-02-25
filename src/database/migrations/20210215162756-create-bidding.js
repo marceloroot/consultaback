@@ -22,7 +22,7 @@ module.exports = {
             allowNull: false
         },
         descricao: {
-            type: Sequelize.STRING,
+            type: Sequelize.STRING(2000),
             allowNull: false
         },
         dataabertura: {
