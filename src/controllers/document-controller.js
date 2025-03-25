@@ -86,9 +86,16 @@ module.exports = {
 
   async delete(req, res) {
     const { document_id } = req.params;
-    const document = Document.findByPk(document_id);
+    const document = await Document.findByPk(document_id);
     if (!document) {
       return res.status(400).send({ error: "Documento não encontrado" });
+    }
+    try {
+      await minioClient.statObject(bucketName, document.key);
+
+      await minioClient.removeObject(bucketName, document.key);
+    } catch (error) {
+      console.log("error ao excluir arquivo", error);
     }
     const removeDocument = await Document.destroy({
       where: { id: document_id },
