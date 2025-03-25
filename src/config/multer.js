@@ -1,37 +1,22 @@
-const multer  =require('multer');
-const path  =require('path');
-const crypto  =require('crypto');
+const multer = require("multer");
+const crypto = require("crypto");
 
-module.exports={
-dest: path.resolve(__dirname, '..','..','tmp','uploads'),
-storage: multer.diskStorage({
+module.exports = {
+  // Remova o `dest` para evitar criar a pasta
+  // dest: path.resolve(__dirname, "..", "..", "tmp", "uploads"), ❌
 
-  destination: ( req, file, cb ) =>{
-       cb(null,path.resolve(__dirname, '..','..','tmp','uploads'))
+  storage: multer.memoryStorage(), // ✅ Sem opções de disco
+
+  limits: {
+    fileSize: 8 * 1024 * 1024,
   },
 
-  filename: ( req, file, cb) =>{
-      crypto.randomBytes(16,(err,hash) =>{
-          if(err) cb(err);
-          
-          const fileName = `${hash.toString('hex')}-${Date.now()}.pdf`;
-
-          cb(null,fileName);
-      });
+  fileFilter: (req, file, cb) => {
+    const allowedMimes = ["application/pdf"];
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Tipo inválido."));
+    }
   },
-
-}),
-limits:{
-  fileSize: 8 * 1024 * 1024,
-},
-fileFilter:(req,file,cb) =>{
-   const allowedMimes =[
-    'application/pdf',
-   ];
-   if(allowedMimes.includes(file.mimetype)){
-       cb(null,true);
-   }else{
-       cb(new Error('Tipo invalido.'));
-   }
- },
 };
